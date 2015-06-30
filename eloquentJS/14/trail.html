@@ -1,0 +1,41 @@
+<!doctype html>
+
+<style>
+.trail { /* className for the trail elements */
+  position: absolute;
+  height: 6px; width: 6px;
+  border-radius: 3px;
+  background: teal;
+}
+body {
+  height: 300px;
+}
+</style>
+
+<script>
+var rect = document.querySelector("body");
+var trails = [];
+rect.addEventListener("mousemove", moved);
+
+function moved(event) {
+  var newElem;
+  if (trails.length > 10) {
+    newElem = trails.shift();
+  } else {
+    newElem = document.createElement("div");
+    newElem.className = "trail";
+  }
+
+  // Do some cool stuff to minimize the opacity
+  for (var index in trails) {
+    var elem = trails[index];
+    elem.style.opacity = (index / trails.length);
+  }
+
+  newElem.style.left = event.pageX + "px";
+  newElem.style.top = event.pageY + "px";
+
+  document.body.appendChild(newElem);
+  trails.push(newElem);
+}
+</script>
